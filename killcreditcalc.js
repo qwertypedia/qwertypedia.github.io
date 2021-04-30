@@ -12,12 +12,25 @@ function calculate() {
     attack(counterArray, hit.player, hit.damage);
   }
 
+  document.getElementById("listComparison").removeAttribute("hidden");
+  document.getElementById("listBefore").innerHTML = listToString(counterArray);
+
   quicksort(0, counterArray.length - 1, counterArray, function (x, y) {
     return y.damage - x.damage;
   });
 
+  document.getElementById("listAfter").innerHTML = listToString(counterArray);
+
   document.getElementById("result").innerHTML =
     'player "' + counterArray[0].player + '" gets the kill credit';
+}
+
+function listToString(counterArray) {
+  var text = "";
+  for (counter of counterArray) {
+    text += "[" + counter.player + "," + String(counter.damage) + "]" + ", ";
+  }
+  return text;
 }
 
 function getHits() {
