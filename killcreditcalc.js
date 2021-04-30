@@ -21,8 +21,13 @@ function calculate() {
 
   document.getElementById("listAfter").innerHTML = listToString(counterArray);
 
-  document.getElementById("result").innerHTML =
-    'player "' + counterArray[0].player + '" gets the kill credit';
+  var resultText = "";
+  if (counterArray[0].player == null || counterArray[0].damage == 0) {
+    resultText = "Nobody gets the kill credit";
+  } else {
+    resultText = 'player "' + counterArray[0].player + '" gets the kill credit';
+  }
+  document.getElementById("result").innerHTML = resultText;
 }
 
 function listToString(counterArray) {
