@@ -40,39 +40,41 @@
         <h1>Kill Credit Mechanics Explained</h1>
         <img src="./images/killcredit/image1.png" alt="list of 16 entries">
         <p>
-          A monster can keep track of up to 16 players and the damage they have each dealt.
-          This is stored as a list of 16 entries. Each entry stores a player ID and a damage counter for that particular
-          player. By default, an entry has no playerID and 0 damage dealt.
+          An npc has an internal point system called "heropoints" to keep track of what players did what to the npc.
+          A list of 16 entries is used to determine kill credit. Each entry contains a player UID and "heropoints" (damage counter) for that individual player.
+          The player with the most heropoints gets the kill credit.
+          By default, an entry has no player UID and 0 heropoints.
         </p>
         <img src="./images/killcredit/image2.png" alt="a recent and a new player deals damage">
         <p>
           To be added to the list, a player must deal non-zero damage or neutral damage (such as from recoils).
           The player will be assigned to the next available entry.
-          If the player deals additional damage, their damage counter is modified and their position in the list remains the same.
+          If the player deals additional damage, their heropoints is modified and their position in the list remains the same.
         </p>
         <p>
-          Neutral damage (such as from recoils) acts as 0 damage and allows a player to be added to the list with 0 damage dealt.
+          Neutral damage (such as from recoils) acts as 0 heropoints and allows a player to be added to the list with 0 heropoints.
+        </p>
+        <p>
+          When an npc regenerates back to full HP, the list of entries is reset.
         </p>
 
-        <h2>Determining kill credit</h2>
+        <h2>Determining kill credit 💀💳</h2>
         <img src="./images/killcredit/image4.png" alt="sorted list">
         <p>
-          The game then sorts this list based on the damage counters using an in-house unstable quicksort algorithm.
+          When an npc dies, the list is sorted based on the heropoints using an in-house unstable quicksort algorithm.
           The player at the start of the sorted list is given the kill credit, and the loot should appear for that player,
-          as long as their damage counter is greater than 0.
+          as long as their heropoints are greater than 0.
         </p>
         <p>
-          If the player with kill credit is an ironman, the game checks if there are any other players in the list.
-          If there are, no loot is dropped.
-          An example is that an ironman will get no loot if another player has recoiled the monster, as there will be another player in the list with 0 damage.
+          No loot will appear if the player with kill credit is logged out, or if that player is an ironman and there are other players in the list.
+          An example is that an ironman will get no loot if another player has recoiled the monster, as there will be another player in the list with 0 heropoints.
         </p>
         <p>
           Side note: If the list isn't full, the game also sorts and swaps around those entries that have no assigned player during the quicksort, as shown in the image above.
-          So, even if only a single player has dealt damage, the game sorts and swaps around 16 entries. This could be more efficient if a binary search was performed
-          so only the entries that have an assigned player is sorted, though this could change the outcome of who gets the kill credit in the case of a tie.
+          This could be more efficient if a binary search is performed so only the entries that have an assigned player is sorted, though this could change the outcome of who gets the kill credit in the case of a tie.
         </p>
 
-        <h2>Who gets the kill credit if 1000 players each deal 1 damage?</h2>
+        <h2>Who gets the kill credit if 1000 players each deal 1 damage? 🤔</h2>
         <p>
           When the list is full and an extra player deals damage,
           the damage is dealt as normal but the list remains unchanged.
@@ -81,6 +83,14 @@
           If 1000 players each deal 1 damage, the list will have 16 entries each with 1 damage.
           Since the game uses an unstable sorting algorithm, the player who ends up at the beginning
           of the list is "random" but predictable - the 12th player will get the kill credit.
+        </p>
+        <p>
+          These mechanics were figured out to see if you could bypass the tutorial island melee / ranged xp.
+          Consider the following scenario - The main deals a 0xp spawn hit (dealing 1 damage), then another player deals 1 damage, then another player deals the final 1 damage.
+          What if, before the final player finishes off the kill, the rat regens by 1 hp and then another player deals 1 damage?
+          Who would get the kill credit if 100 players dealt 1 damage to the rat without it regenerating back to full hp?
+          Is there a combination of players where the first player to deal damage is given the kill credit?
+          Well, turns out there is no combination. bummer.
         </p>
         <p>
           Check out the <a href="/killcreditcalc.html">Kill Credit Calculator</a> to see for yourself!
