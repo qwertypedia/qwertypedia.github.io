@@ -1,133 +1,111 @@
-function calculate() {
-  try {
-    var hits = getHits();
-  } catch (error) {
-    document.getElementById("result").innerHTML = error;
-    return;
+"use strict";
+
+const countersToString = function (counters) {
+  let output = "";
+  for (const counter of counters) {
+    output += `[${counter.player},${counter.damage}], `;
   }
+  output = output.slice(0, -2);
+  return output;
+};
 
-  var counterArray = createCounterArray();
+const getHits = function () {
+  const hits = [];
+  let lines = document.getElementById("hitsInput").value.split(/\r?\n/);
 
-  for (hit of hits) {
-    attack(counterArray, hit.player, hit.damage);
-  }
+  // remove empty lines
+  lines = lines.filter(line => line);
 
-  document.getElementById("listComparison").removeAttribute("hidden");
-  document.getElementById("listBefore").innerHTML = listToString(counterArray);
-
-  quicksort(0, counterArray.length - 1, counterArray, function (x, y) {
-    return y.damage - x.damage;
-  });
-
-  document.getElementById("listAfter").innerHTML = listToString(counterArray);
-
-  var resultText = "";
-  if (counterArray[0].player == null || counterArray[0].damage == 0) {
-    resultText = "Nobody gets the kill credit";
-  } else {
-    resultText = 'player "' + counterArray[0].player + '" gets the kill credit';
-  }
-  document.getElementById("result").innerHTML = resultText;
-}
-
-function listToString(counterArray) {
-  var text = "";
-  for (counter of counterArray) {
-    text += "[" + counter.player + "," + String(counter.damage) + "]" + ", ";
-  }
-  return text;
-}
-
-function getHits() {
-  var hits = [];
-  var lines = document.getElementById("hitsInput").value.split("\n");
-
-  removeItemAll(lines, "");
-
-  for (line of lines) {
-    line = line.replaceAll("\r", "");
-    var values = line.split(",");
-
-    for (var i = 0; i < values.length; i++) {
-      values[i] = values[i].trim();
-    }
+  for (const line of lines) {
+    let [player, damage, ...other] = line.split(",");
 
     if (
-      Object.is(Number(values[1]), NaN) ||
-      values.length != 2 ||
-      values.includes("")
+      isNaN(damage) ||
+      player === "" ||
+      damage === "" ||
+      player === undefined ||
+      damage === undefined ||
+      other.length !== 0
     ) {
       throw new Error("please refer to usage");
     }
 
-    hits.push({ player: values[0], damage: Number(values[1]) });
-  }
+    player = player.trim();
+    damage = damage.trim();
 
-  if (hits.length == 0) {
-    throw new Error("please refer to usage");
+    hits.push({ player: player, damage: Number(damage) });
   }
 
   return hits;
-}
+};
 
-function removeItemAll(arr, value) {
-  var i = 0;
-  while (i < arr.length) {
-    if (arr[i] === value) {
-      arr.splice(i, 1);
-    } else {
-      ++i;
-    }
-  }
-  return arr;
-}
-
-function createCounterArray() {
-  var array = [];
-  for (var i = 0; i < 16; i++) {
-    array.push({ player: null, damage: 0 });
-  }
-  return array;
-}
-
-function attack(counterArray, player, damage) {
-  for (counter of counterArray) {
-    if (counter.player == null) {
-      counter.player = player;
-    }
+const attack = function (counters, player, damage) {
+  for (const counter of counters) {
+    counter.player ??= player;
     if (counter.player == player) {
       counter.damage += damage;
       return;
     }
   }
-}
+};
 
-//source: https://gist.github.com/jaydenkieran/1bd6ddbd99ba22ccf21d0d67e7777ff0
-function quicksort(low, high, arr, compare) {
-  var pivot_index = ~~((low + high) / 2); // floor division
-  var pivot_value = arr[pivot_index];
+//source: https://runescape.wiki/w/MediaWiki:Gadget-perkcalc-core.js#L-1020
+const quicksort = function (low, high, arr, compare) {
+  const pivot_index = ~~((low + high) / 2); // floor division
+  const pivot_value = arr[pivot_index];
   arr[pivot_index] = arr[high];
   arr[high] = pivot_value;
-  var counter = low;
-  var loop_index = low;
+  let counter = low;
+  let loop_index = low;
 
   while (loop_index < high) {
     if (compare(arr[loop_index], pivot_value) < (loop_index & 1)) {
-      var tmp = arr[loop_index];
+      const tmp = arr[loop_index];
       arr[loop_index] = arr[counter];
       arr[counter] = tmp;
-      counter = counter + 1;
+      counter += 1;
     }
-    loop_index = loop_index + 1;
+    loop_index += 1;
   }
 
   arr[high] = arr[counter];
   arr[counter] = pivot_value;
 
   if (low < counter - 1) {
-    self.quicksort(low, counter - 1, arr, compare);
+    quicksort(low, counter - 1, arr, compare);
   }
   if (counter + 1 < high) {
-    self.quicksort(counter + 1, high, arr, compare);
+    quicksort(counter + 1, high, arr, compare);
   }
-}
+};
+
+document.querySelector(".calculate").addEventListener("click", function () {
+  let hits;
+  try {
+    hits = getHits();
+  } catch (error) {
+    document.getElementById("result").innerHTML = error;
+    return;
+  }
+
+  const counters = Array.from({ length: 16 }, (v, k) => ({
+    player: null,
+    damage: 0,
+  }));
+
+  for (const hit of hits) attack(counters, hit.player, hit.damage);
+
+  document.getElementById("listComparison").removeAttribute("hidden");
+  document.getElementById("listBefore").innerHTML = countersToString(counters);
+
+  quicksort(0, counters.length - 1, counters, (x, y) => y.damage - x.damage);
+
+  document.getElementById("listAfter").innerHTML = countersToString(counters);
+
+  const result =
+    counters[0].player === null || counters[0].damage === 0
+      ? "Nobody gets the kill credit"
+      : `player "${counters[0].player}" gets the kill credit`;
+
+  document.getElementById("result").innerHTML = result;
+});
