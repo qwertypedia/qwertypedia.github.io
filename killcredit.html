@@ -83,12 +83,12 @@
         <h1>Kill Credit Mechanics Explained</h1>
         <img src="./images/killcredit/image1.png" alt="list of 16 entries" />
         <p>
-          An npc has an internal point system called "heropoints" to keep track
-          of what players did what to the npc. A list of 16 entries is used to
-          determine kill credit. Each entry contains a player UID and
-          "heropoints" (damage counter) for that individual player. The player
-          with the most heropoints gets the kill credit. By default, an entry
-          has no player UID and 0 heropoints.
+          An npc has an internal point system to keep track of players and their
+          dealt damage. A list of 16 entries is used to determine kill credit.
+          Each entry contains a player UID and a damage counter (known
+          internally as "heropoints") for that individual player. The player
+          with the most dealt damage gets the kill credit. By default, an entry
+          has no player UID and 0 dealt damage.
         </p>
         <img
           src="./images/killcredit/image2.png"
@@ -97,13 +97,13 @@
         <p>
           To be added to the list, a player must deal non-zero damage or neutral
           damage (such as from recoils). The player will be assigned to the next
-          available entry. If the player deals additional damage, their
-          heropoints is modified and their position in the list remains the
-          same.
+          available entry. If the player deals additional damage, their damage
+          counter is incremented accordingly and their position in the list
+          remains the same.
         </p>
         <p>
-          Neutral damage (such as from recoils) acts as 0 heropoints and allows
-          a player to be added to the list with 0 heropoints.
+          Neutral damage (such as from recoils) acts as 0 damage and allows a
+          player to be added to the list with 0 damage dealt.
         </p>
         <p>
           When an npc regenerates back to full HP, the list of entries is reset.
@@ -112,17 +112,17 @@
         <h2>Determining kill credit 💀💳</h2>
         <img src="./images/killcredit/image4.png" alt="sorted list" />
         <p>
-          When an npc dies, the list is sorted based on the heropoints using an
-          in-house unstable quicksort algorithm. The player at the start of the
-          sorted list is given the kill credit, and the loot should appear for
-          that player, as long as their heropoints are greater than 0.
+          When an npc dies, the list is sorted based on the dealt damage using
+          an in-house unstable quicksort algorithm. The player at the start of
+          the sorted list is given the kill credit, and the loot should appear
+          for that player, as long as their dealt damage is greater than 0.
         </p>
         <p>
           No loot will appear if the player with kill credit is logged out, or
           if that player is an ironman and there are other players in the list.
           An example is that an ironman will get no loot if another player has
-          recoiled the monster, as there will be another player in the list with
-          0 heropoints.
+          recoiled the npc, as there will be another player in the list with 0
+          dealt damage.
         </p>
         <p>
           Side note: If the list isn't full, the game also sorts and swaps
@@ -142,7 +142,7 @@
           If 1000 players each deal 1 damage, the list will have 16 entries each
           with 1 damage. Since the game uses an unstable sorting algorithm, the
           player who ends up at the beginning of the list is "random" but
-          predictable - the 12th player will get the kill credit.
+          predictable - the 12th player to deal damage will get the kill credit.
         </p>
         <p>
           These mechanics were figured out to see if you could bypass the
