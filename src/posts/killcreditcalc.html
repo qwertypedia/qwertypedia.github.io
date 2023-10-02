@@ -1,0 +1,41 @@
+---
+layout: layouts/blog.njk
+tags: post
+title: Kill Credit Calculator
+image: /assets/images/index/killcreditcalc.png
+description: Online tool to calculate the kill credit.
+permalink: /posts/killcreditcalc/
+icon: fas fa-calculator
+order: 2
+---
+
+<h2>Kill Credit Calculator</h2>
+<div class="mb-3">
+  <label for="hitsInput" class="form-label">Hits</label>
+  <textarea
+    class="form-control"
+    id="hitsInput"
+    cols="30"
+    rows="10"
+    style="font-family: Courier New"
+  >
+1,1&#13;&#10;2,1&#13;&#10;3,1&#13;&#10;4,1&#13;&#10;5,1&#13;&#10;2,1&#13;&#10;4,1&#13;&#10;1,1</textarea
+  >
+  <div id="hitsHelp" class="form-text">
+    Usage: Each new line represents a "hit". Line 1 represents the first hit,
+    line 2 is the second hit and so on. A hit is represented as a player and
+    that players' dealt damage, seperated by a comma "player, damage". A player
+    can be named anything, e.g, "1", "player1" or "Durial321".
+  </div>
+</div>
+<div class="col-auto">
+  <button class="btn btn-primary calculate">Calculate</button>
+  <span id="result" class="ms-2"></span>
+</div>
+<div id="listComparison" hidden="hidden">
+  <h5>before sort</h5>
+  <p id="listBefore"></p>
+  <h5>after sort</h5>
+  <p id="listAfter"></p>
+</div>
+<script src="/assets/js/killcreditcalc.js"></script>

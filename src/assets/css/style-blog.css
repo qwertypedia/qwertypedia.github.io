@@ -21,6 +21,12 @@ main img {
   margin-right: auto;
   max-width: 100%;
   height: auto;
+  margin-top: 36px;
+}
+
+main p {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 h1,
@@ -32,19 +38,6 @@ h6 {
   font-weight: 600;
   margin-top: 36px;
   margin-bottom: 12px;
-}
-
-#explain img {
-  margin-top: 36px;
-}
-
-#explain p {
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-
-#code {
-  margin-top: 50px;
 }
 
 textarea {

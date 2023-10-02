@@ -1,0 +1,53 @@
+---
+layout: layouts/base.njk
+title: Qwertypedia
+image: /images/index/share-index.png
+description: It's almost like osrs wiki
+---
+
+<div class="headerBgColor"></div>
+<div class="headerBg"></div>
+<header class="container pt-5 px-4">
+  <h1 class="text-white">
+    <i class="fas fa-book-open"></i>
+    Qwertypedia
+  </h1>
+  <p class="lead text-white">It's almost like osrs wiki</p>
+  <ul class="list-inline mb-3 p-0 pb-3">
+    <li class="list-inline-item">
+      <a class="fs-5 text-white" href="https://twitter.com/KeyboardOSRS">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a class="fs-5 text-white" href="https://youtube.com/KeyboardOSRS">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </li>
+  </ul>
+</header>
+<main class="container">
+  {% for post in collections.post | sortByOrder %}
+  <div class="card mb-3">
+    <a href="{{ post.url }}">
+      <div class="row g-0">
+        <div class="col-md-4 position-relative" style="height: 150px">
+          <img
+            class="position-absolute top-50 start-50 translate-middle"
+            src="{{ post.data.image }}"
+            alt=""
+            width="150px"
+            height="120px"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.data.title }}</h5>
+            <p class="card-text">{{ post.data.description }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</main>

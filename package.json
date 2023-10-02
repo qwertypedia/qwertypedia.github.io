@@ -1,0 +1,19 @@
+{
+  "name": "qwertypedia.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "watch:eleventy": "eleventy --serve",
+    "build:eleventy": "ELEVENTY_ENV=development eleventy",
+    "build:eleventy:prod": "ELEVENTY_ENV=production eleventy",
+    "start": "npm run watch:eleventy",
+    "build": "npm run build:eleventy",
+    "build:prod": "npm run build:eleventy:prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}

@@ -1,3 +1,6 @@
-dev/*
-.vscode/settings.json
+/dev
 .DS_Store
+/node_modules
+/public
+/.vscode
+.history
