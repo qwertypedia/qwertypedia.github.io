@@ -28,8 +28,8 @@ description: It's almost like osrs wiki
 </header>
 <main class="container">
   {% for post in collections.post | sortByOrder %}
-  <div class="card mb-3">
-    <a href="{{ post.url }}">
+  <div class="card mb-3 card-post">
+    <a href="{{ post.url }}" class="index-post-link">
       <div class="row g-0">
         <div class="col-md-4 position-relative" style="height: 150px">
           <img

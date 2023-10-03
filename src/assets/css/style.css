@@ -41,7 +41,7 @@ header {
   max-width: 800px;
 }
 
-a {
+.index-post-link {
   text-decoration: inherit;
   color: inherit;
 }
@@ -50,7 +50,7 @@ a {
   box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 0.1);
 }
 
-.card:hover {
+.card-post:hover {
   box-shadow: 0px 2px 13px hsla(0, 0%, 0%, 0.15);
 }
 
