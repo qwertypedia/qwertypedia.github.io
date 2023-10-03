@@ -1,0 +1,36 @@
+.hidden {
+  display: none !important;
+}
+
+.staticrypt-spinner-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staticrypt-spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid gray;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+  animation-duration: 0.75s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: spinner-border;
+}
+
+@keyframes spinner-border {
+  100% {
+    transform: rotate(360deg);
+  }
+}
