@@ -1,0 +1,28 @@
+<div id="staticrypt_loading" class="staticrypt-spinner-container">
+  <div class="staticrypt-spinner"></div>
+</div>
+<div id="staticrypt_content" class="staticrypt-content hidden">
+  <div class="staticrypt-page">
+    <div class="d-flex justify-content-center">
+      <div class="card p-4" style="width: 100%; max-width: 360px">
+        <div class="card-body">
+          <form id="staticrypt-form" class="d-flex flex-column align-items-center" style="align-items: center">
+            <legend class="text-center fw-bold">Protected Page</legend>
+            <p class="mb-4">Encrypted with
+              <a href="https://robinmoisson.github.io/staticrypt/" target="_blank">StatiCrypt</a>
+            </p>
+            <div class="mb-3" style="width: 100%;">
+              <input type="password" class="form-control" id="staticrypt-password" placeholder="Password" style="width: 100%; height: 50px">
+              <p id="staticrypt-incorrect-password" class="hidden text-danger">Incorrect password!</p>
+            </div>
+            <div class="mb-3 form-check" style="width: 100%; display: flex; justify-content: flex-start;">
+              <input type="checkbox" class="form-check-input" id="staticrypt-remember" style="margin-right: 0.5rem;">
+              <label class="form-check-label" for="staticrypt-remember">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary staticrypt-decrypt" style="width: 100%; height: 50px">Decrypt</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
