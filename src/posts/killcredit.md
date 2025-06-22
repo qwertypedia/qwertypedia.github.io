@@ -41,7 +41,7 @@ If 1000 players each deal 1 damage, the list will have 16 entries each with 1 da
 
 These mechanics were figured out to see if you could bypass the tutorial island melee / ranged xp. Consider the following scenario - The main deals a 0xp spawn hit (dealing 1 damage), then another player deals 1 damage, then another player deals the final 1 damage. What if, before the final player finishes off the kill, the rat regens by 1 hp and then another player deals 1 damage? Who would get the kill credit if 100 players dealt 1 damage to the rat without it regenerating back to full hp? Is there a combination of players where the first player to deal damage is given the kill credit? Well, turns out there is no combination. bummer.
 
-Check out the [Kill Credit Calculator](/killcreditcalc.html) to see for yourself!
+Check out the [Kill Credit Calculator](/posts/killcreditcalc/) to see for yourself!
 
 ### code (python)
 
